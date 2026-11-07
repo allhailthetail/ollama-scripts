@@ -1,0 +1,35 @@
+[project]
+name = "ollama-scripts"
+dynamic = ["version"]
+description = "Small CLI tools for working with local Ollama models"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Matthew Younger" }]
+keywords = ["ollama", "llm", "cli", "model-management"]
+dependencies = ["ollama>=0.6"]
+
+[project.urls]
+Homepage = "https://github.com/allhailthetail/ollama-scripts"
+Issues = "https://github.com/allhailthetail/ollama-scripts/issues"
+
+[project.scripts]
+ollama-rm = "ollama_scripts.rm:main"
+ollama-info = "ollama_scripts.info:main"
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "src/ollama_scripts/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ollama_scripts"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
