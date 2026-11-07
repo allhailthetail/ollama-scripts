@@ -56,7 +56,9 @@ Requirements:
   abort without deleting.
 - Models are sorted largest first; sizes are shown human-readable and the final
   prompt includes the total size to be freed.
-- Nothing is deleted until the second confirmation.
+- Nothing is deleted until the second confirmation. That final prompt requires
+  an explicit `y`/`yes` or `n`/`no`; a blank line re-prompts rather than
+  declining.
 - `ollama.delete()` removes one tag, not every tag sharing a digest.
 - A failed deletion does not stop the run; failures are reported and the script
   exits `1`. Interrupts exit `130`. Success and "nothing selected" exit `0`.

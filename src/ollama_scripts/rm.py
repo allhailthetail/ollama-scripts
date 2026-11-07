@@ -78,15 +78,20 @@ def main(argv=None):
         print(describe(item, width))
     print(f'\n{len(to_delete)} model(s), {format_size(total_size)} total.')
 
-    try:
-        choice = input('Proceed with deletion? (y/N) ').strip().lower()
-    except (EOFError, KeyboardInterrupt):
-        print('\nInterrupted, nothing deleted.')
-        return 130
+    # The destructive step needs an explicit answer: ENTER must not decline.
+    while True:
+        try:
+            choice = input('Proceed with deletion? (y/n) ').strip().lower()
+        except (EOFError, KeyboardInterrupt):
+            print('\nInterrupted, nothing deleted.')
+            return 130
 
-    if choice not in ('y', 'yes'):
-        print('No models were deleted, exiting.')
-        return 0
+        if choice in ('y', 'yes'):
+            break
+        if choice in ('n', 'no'):
+            print('No models were deleted, exiting.')
+            return 0
+        print("Please type 'y' to delete or 'n' to cancel.")
 
     deleted = []
     failed = []

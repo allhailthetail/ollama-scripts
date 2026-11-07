@@ -70,7 +70,8 @@ ollama-rm
 
 Models are shown largest first. Answer `y`/`yes` to select one, `n`/`no` to
 keep it, and `q`/`quit` to abort without deleting. Nothing is deleted until a
-second confirmation prompt.
+second confirmation prompt, which requires an explicit `y`/`yes` or `n`/`no`;
+a blank line does not count as "no" and asks again.
 
 ## Development
 

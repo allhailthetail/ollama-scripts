@@ -104,6 +104,32 @@ def test_final_confirmation_declined_deletes_nothing(monkeypatch):
     assert deleted == []
 
 
+def test_final_confirmation_blank_reprompts(monkeypatch, capsys):
+    patch_list(monkeypatch, [make_model('a', 1_000_000_000)])
+    patch_input(monkeypatch, ['y', '', 'n'])
+    deleted = []
+    monkeypatch.setattr(rm.ollama, 'delete', deleted.append)
+
+    exit_code = rm.main([])
+    captured = capsys.readouterr()
+
+    assert exit_code == 0
+    assert deleted == []
+    assert "Please type 'y' to delete or 'n' to cancel." in captured.out
+
+
+def test_final_confirmation_blank_then_yes_deletes(monkeypatch):
+    patch_list(monkeypatch, [make_model('a', 1_000_000_000)])
+    patch_input(monkeypatch, ['y', '', 'y'])
+    deleted = []
+    monkeypatch.setattr(rm.ollama, 'delete', deleted.append)
+
+    exit_code = rm.main([])
+
+    assert exit_code == 0
+    assert deleted == ['a']
+
+
 def test_delete_failure_exits_one(monkeypatch, capsys):
     patch_list(monkeypatch, [make_model('a', 1_000_000_000)])
     patch_input(monkeypatch, ['y', 'y'])
